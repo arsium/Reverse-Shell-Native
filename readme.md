@@ -62,4 +62,4 @@ I was able to re-create (not completely) the interesting part by duplicating soc
 
 Thanks to @Maldev-Academy for inspiration for this.
 
-![NativeShell]([C:\Users\arsium\Documents\GitHub\Reverse-Shell-Native\NativeShell.jpg](https://raw.githubusercontent.com/arsium/Reverse-Shell-Native/refs/heads/main/NativeShell.jpg))
+![NativeShell](https://github.com/arsium/Reverse-Shell-Native/blob/main/NativeShell.jpg?raw=true)
