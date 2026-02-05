@@ -63,3 +63,26 @@ I was able to re-create (not completely) the interesting part by duplicating soc
 Thanks to @Maldev-Academy for inspiration for this.
 
 ![NativeShell](https://github.com/arsium/Reverse-Shell-Native/blob/main/NativeShell.jpg?raw=true)
+
+## Server
+
+```
+Commands:
+	display/list										- Show all connected clients
+    select <endpoint>    								- Select a client
+    interact/shell          							- Enter interactive shell with selected client
+    server
+            start <port>    							- Start a new server
+    patch
+			network <ip> <port> [OPT]<output name>      - Patch the reverse shell with a new endpoint to connect
+    exit                                           		- Exit the program
+```
+
+## Proxy
+
+```
+<local port> <remote ip> <remote port>
+```
+
+## Example
+
