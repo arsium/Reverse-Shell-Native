@@ -88,3 +88,7 @@ Commands:
 
 ![NativeShellProxy](https://github.com/arsium/Reverse-Shell-Native/blob/main/Proxy.png?raw=true)
 
+## Obfuscation
+
+![IDA](https://github.com/arsium/Reverse-Shell-Native/blob/main/IDA_Graph.png?raw=true)
+![Binary](https://github.com/arsium/Reverse-Shell-Native/blob/main/Binary_1.png?raw=true)
